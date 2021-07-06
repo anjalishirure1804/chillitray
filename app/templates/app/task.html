@@ -1,0 +1,57 @@
+{% extends 'app/home.html' %} {% load static %}{% block title %} Task Creation{% endblock title %} {% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'task' %}">Task Assign</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'viewtask' %}">Task Display</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">LogOut</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'hierarchy' %}">Hierarchy</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h2 class="text-center text-success">Task Creation</h2>
+            <hr>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_task_title" class="form-label">Task Title</label>
+                    <input type="text" class="form-control" name="task_title" id="id_task_title" placeholder="Task Title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_task_desc" class="form-label">Task Description</label>
+                    <textarea class="form-control" name="task_desc" id="id_task_desc" rows="2" required></textarea>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <label for="id_task_pic" class="form-label">Task Image:</label>
+                    <button class="btn btn-primary" style="margin-top:0.3rem;">
+                    <input type="file" name="task_pic" class="form-control" accept="image/*" id="id_task_pic"> 
+                </button>
+
+                </div>
+                <hr>
+                <div class="mb-4">
+                    <button type="submit" class="btn btn-secondary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

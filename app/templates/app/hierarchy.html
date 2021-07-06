@@ -1,0 +1,87 @@
+{% extends 'app/home.html' %} {% load static %}{% block title %} Task Creation{% endblock title %} {% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'task' %}">Task Assign</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'viewtask' %}">Task Display</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">LogOut</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'hierarchy' %}">Hierarchy</a>
+                </li>
+
+
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h2 class="text-center text-success">Table Creation For Hierarchy</h2>
+            <hr>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_title" class="form-label"> Title</label>
+                    <input type="text" class="form-control" name="title" id="id_title" placeholder="Title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_parent" class="form-label">Parent Id</label>
+                    <input type="text" class="form-control" name="parent" id="id_parent" placeholder="Parent ID">
+                </div>
+                <hr>
+                <div class="mb-4">
+                    <button type="submit" class="btn btn-secondary">Create Table</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<hr>
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h3 class="text-center text-dark">Table</h3>
+            <hr>
+            <table class="table table-secondary table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+
+                        <th scope="col">Title</th>
+                        <th scope="col">Product Id</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in hierarchy %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <th>{{request.user}}</th>
+                        <th>{{task.title}}</th>
+                        {% if "{{task.parent}}" is "Null" %}
+                        <th>Null</th>
+                        {% else %}
+                        <th>{{task.parent}}</th>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="text-center"><a href="{% url 'showhierarchy' %}" class="btn btn-success">Show Hierarchy</a> {% endblock body %}</div>

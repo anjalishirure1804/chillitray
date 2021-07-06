@@ -1,0 +1,80 @@
+{% extends 'app/home.html' %} {% load static %}{% block title %} Task Display{% endblock title %} {% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'task' %}">Task Assign</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'viewtask' %}">Task Display</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">LogOut</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'hierarchy' %}">Hierarchy</a>
+                </li>
+
+
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h3 class="text-center text-danger">Task Display List</h3>
+            <hr>
+            <table class="table table-dark table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th>User Name</th>
+                        <th scope="col">Task Title</th>
+                        <th scope="col">Task Descripion</th>
+                        <th scope="col">Task Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in viewtask %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <th>{{request.user}}</th>
+                        <td>{{task.task_title}}</td>
+                        <td>{{task.task_desc}}</td>
+                        <td><img src="{{task.task_pic.url}}" class="img-top"></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- <nav aria-label="..." style="margin-left: auto;">
+        <span class="current">
+Page {{ pageObj.number }} of {{ pageObj.paginator.num_pages }}.
+</span>
+        <ul class="pagination">
+            {% if pageObj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ pageObj.previous_page_number }}">{{ pageObj.previous_page_number }} </a>
+            </li>
+            {% endif %} {% if pageObj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ pageObj.next_page_number }}">{{ pageObj.next_page_number }}</a></li>
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ pageObj.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+            {% endif %}
+            </li>
+        </ul>
+    </nav> -->
+</div>
+{% endblock body %}
